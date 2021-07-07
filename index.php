@@ -16,6 +16,7 @@
 
   $table_name = 'users';
 
+  $message = false;
   if (isset($_POST['submit'])) {
 
     $data['name'] = $_POST['name'];
@@ -27,7 +28,7 @@
       // for save data in db pass table name and data
       $insert = insertInto($table_name, $data);
       if ($insert) {
-        echo 'insert success';
+        $message = 'Insert success';
       }
     }
 
@@ -38,16 +39,27 @@
       // for save data in db pass table name and data
       $update = editbyId($table_name, $user_id, $data);
       if ($update) {
-        echo 'update success';
+        $message = 'Update success';
       }
+
+
     }
   }
   if (isset($_POST['delete']) && $_POST['delete'] == "delete") {
 
     $delete = deletebyId($table_name, $_POST['user_id']);
     if ($delete) {
-      echo 'delete success';
+      $message = 'Delete success';
+
     }
+  }
+
+  if ($message) {
+    echo "
+        <div class='alert alert-success'>
+            $message
+        </div>
+      ";
   }
   //select data from table name
 
